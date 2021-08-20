@@ -1,41 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
-import Card from '../UI/Card/Card';
-import classes from './Login.module.css';
-import Button from '../UI/Button/Button';
+import Card from "../UI/Card/Card";
+import classes from "./Login.module.scss";
+import Button from "../UI/Button/Button";
 
-const Login = (props) => {
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [emailIsValid, setEmailIsValid] = useState();
-  const [enteredPassword, setEnteredPassword] = useState('');
-  const [passwordIsValid, setPasswordIsValid] = useState();
-  const [formIsValid, setFormIsValid] = useState(false);
+export type LoginProps = {
+  onLogin: any;
+};
 
-  const emailChangeHandler = (event) => {
+const Login = (props: LoginProps) => {
+  const [enteredEmail, setEnteredEmail] = useState<string>("");
+  const [emailIsValid, setEmailIsValid] = useState<boolean>();
+  const [enteredPassword, setEnteredPassword] = useState<string>("");
+  const [passwordIsValid, setPasswordIsValid] = useState<boolean>();
+  const [formIsValid, setFormIsValid] = useState<boolean>(false);
+
+  const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEnteredEmail(event.target.value);
 
     setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
+      event.target.value.includes("@") && enteredPassword.trim().length > 6
     );
   };
 
-  const passwordChangeHandler = (event) => {
+  const passwordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEnteredPassword(event.target.value);
 
     setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
+      event.target.value.trim().length > 6 && enteredEmail.includes("@")
     );
   };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    setEmailIsValid(enteredEmail.includes("@"));
   };
 
   const validatePasswordHandler = () => {
     setPasswordIsValid(enteredPassword.trim().length > 6);
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = (event: FormEvent) => {
     event.preventDefault();
     props.onLogin(enteredEmail, enteredPassword);
   };
@@ -45,7 +49,7 @@ const Login = (props) => {
       <form onSubmit={submitHandler}>
         <div
           className={`${classes.control} ${
-            emailIsValid === false ? classes.invalid : ''
+            emailIsValid === false ? classes.invalid : ""
           }`}
         >
           <label htmlFor="email">E-Mail</label>
@@ -59,7 +63,7 @@ const Login = (props) => {
         </div>
         <div
           className={`${classes.control} ${
-            passwordIsValid === false ? classes.invalid : ''
+            passwordIsValid === false ? classes.invalid : ""
           }`}
         >
           <label htmlFor="password">Password</label>

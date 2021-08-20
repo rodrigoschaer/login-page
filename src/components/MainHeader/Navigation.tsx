@@ -1,8 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import classes from './Navigation.module.css';
+import classes from "./Navigation.module.scss";
 
-const Navigation = (props) => {
+export type NavigationProps = {
+  isLoggedIn?: boolean;
+  onLogout?: any;
+};
+
+const Navigation = (props: NavigationProps) => {
   return (
     <nav className={classes.nav}>
       <ul>
