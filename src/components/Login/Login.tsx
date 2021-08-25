@@ -4,10 +4,6 @@ import Card from "../UI/Card/Card";
 import classes from "./Login.module.scss";
 import Button from "../UI/Button/Button";
 
-export type LoginProps = {
-  onLogin: any;
-};
-
 type ReducerAction = {
   type: string;
   value: string;
@@ -38,6 +34,10 @@ const passwordReducer = (state: StateType, action: ReducerAction) => {
   return { value: "", isValid: false };
 };
 
+export type LoginProps = {
+  onLogin: any;
+};
+
 const Login = (props: LoginProps) => {
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
 
@@ -51,15 +51,18 @@ const Login = (props: LoginProps) => {
     isValid: false,
   });
 
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
+
   useEffect(() => {
     const identifier = setTimeout(() => {
-      setFormIsValid(emailState.isValid && passwordState.isValid);
+      setFormIsValid(emailIsValid && passwordIsValid);
     }, 500);
 
     return () => {
       clearTimeout(identifier);
     };
-  }, [emailState.isValid, passwordState.isValid]);
+  }, [emailIsValid, passwordIsValid]);
 
   const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     dispatchEmail({ type: "USER_INPUT", value: event.target.value });
