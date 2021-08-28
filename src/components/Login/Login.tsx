@@ -42,9 +42,9 @@ const passwordReducer = (state: StateType, action: ReducerAction) => {
   return { value: "", isValid: false };
 };
 
-const ctx = useContext(AuthContext);
-
 const Login = () => {
+  const ctx = useContext(AuthContext);
+
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
@@ -92,7 +92,7 @@ const Login = () => {
 
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    ctx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
