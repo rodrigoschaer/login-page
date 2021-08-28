@@ -1,8 +1,16 @@
-import { useState, ChangeEvent, FormEvent, useEffect, useReducer } from "react";
+import {
+  useContext,
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useReducer,
+} from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.scss";
 import Button from "../UI/Button/Button";
+import AuthContext from "../context/auth-context";
 
 type ReducerAction = {
   type: string;
@@ -34,11 +42,9 @@ const passwordReducer = (state: StateType, action: ReducerAction) => {
   return { value: "", isValid: false };
 };
 
-export type LoginProps = {
-  onLogin: any;
-};
+const ctx = useContext(AuthContext);
 
-const Login = (props: LoginProps) => {
+const Login = () => {
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
